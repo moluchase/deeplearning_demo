@@ -144,3 +144,8 @@ cython_debug/
 data/
 log/
 model/
+
+# custom file
+train.txt
+val.txt
+test.txt

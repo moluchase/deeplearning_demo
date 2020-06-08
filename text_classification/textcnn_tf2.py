@@ -28,6 +28,7 @@ https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/text/Tokenizer
 https://docs.python.org/3/library/json.html
 https://stackoverflow.com/questions/13819496/what-is-different-between-makedirs-and-mkdir-of-os
 https://www.tensorflow.org/tutorials/keras/save_and_load?hl=zh-cn
+https://www.ruanyifeng.com/blog/2014/06/git_remote.html
 """
 
 train_path='data/train/part-00000.txt'
@@ -200,7 +201,7 @@ def train():
     valid_dataset,_=data_process(val_path,padding_size,tokenizer=tokenizer,mode='valid')
     valid_dataset=valid_dataset.batch(batch_size)
 
-
+    # 在使用tf.distribute.MirroredStrategy()前确保程序能够在单核上跑通，
     strategy = tf.distribute.MirroredStrategy()
     with strategy.scope():
         model=TextCNN(padding_size,vocab_size,embed_size,filter_num,num_classes)
