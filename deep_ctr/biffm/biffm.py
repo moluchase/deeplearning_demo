@@ -388,8 +388,7 @@ def BilinearFFM(sparse_input_length=1,embedding_dim=64):
     dot_output = tf.nn.sigmoid(tf.reduce_sum(bilinear_out, axis=-1))
 
     sparse_input_list = [user_id_input_layer, gender_input_layer, age_input_layer, occupation_input_layer, zip_input_layer, item_input_layer]
-    model = Model(inputs = sparse_input_list,
-                  outputs = dot_output)
+    model = Model(inputs = sparse_input_list,outputs = dot_output)
     
     return model
 
@@ -438,11 +437,12 @@ if __name__ == "__main__":
     #Converts a Keras model to dot format and save to a file.
     tf.keras.utils.plot_model(model, to_file='BilinearFFM_model.png', show_shapes=True)
 
+    # binary_crossentropy 输入的input是一个值或者两个值实际上都是一样的，输入一个值本身会自动做交叉熵，输入两个值会取mean，由于两个值的和为1因此是一样的
     model.compile(loss='binary_crossentropy', \
         optimizer=Adam(lr=1e-3), \
         metrics=['accuracy'])
 
-
+    # fit 中前两个参数一个是X，一个是y，X和Model的Input对应上
     history = model.fit(train_generator, \
                         epochs=2, \
                         steps_per_epoch = steps_per_epoch, \
@@ -455,4 +455,19 @@ if __name__ == "__main__":
     model.save_weights(os.path.join(log_dir,'BilinearFFM_model.h5'))    
 
 
+"""
+y_true = [[1], [0],[1],[0],[1],[0]]
+y_pred = [[0.9], [0.1],[0.9],[0.1],[0.8],[0.2]]
+loss = tf.keras.losses.binary_crossentropy(y_true, y_pred)
+# assert loss.shape == (2,)
+print(loss.numpy())
 
+y_true = [[1,0], [0,1],[1,0],[0,1],[1,0],[0,1]]
+y_pred = [[0.9,0.1], [0.1,0.9],[0.9,0.1],[0.1,0.9],[0.8,0.2],[0.2,0.8]]
+loss = tf.keras.losses.binary_crossentropy(y_true, y_pred)
+print(loss.numpy())
+
+>>>[0.10536041 0.10536041 0.10536041 0.10536041 0.22314338 0.22314338]
+>>>[0.10536041 0.10536041 0.10536041 0.10536041 0.22314338 0.22314338]
+
+"""

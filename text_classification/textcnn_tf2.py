@@ -74,7 +74,7 @@ tf.keras.layers.Flatten
 
 下面我用了两种方法来定义TextCNN
 """
-def TextCNN(vocab_size, feature_size, embed_size, num_classes, num_filters,filter_sizes, regularizers_lambda, dropout_rate):
+def TextCNN(vocab_size, feature_size, embed_size, num_classes,filter_num,filter_sizes, regularizers_lambda, dropout_rate):
     inputs = tf.keras.Input(shape=(feature_size,), name='input_data')
     embed_initer = tf.keras.initializers.RandomUniform(minval=-1, maxval=1)
     embed = tf.keras.layers.Embedding(vocab_size, embed_size,
@@ -251,3 +251,20 @@ if __name__ == "__main__":
     train()
     # predict()
 
+
+
+"""
+# 实际上dataset始终返回的都是feature，y的tuple，因此用两个变量来接收
+
+dataset = tf.data.Dataset.from_tensor_slices(([1, 2,3,4,5,6], [6,5,4,3,2,1]))
+list(dataset.as_numpy_iterator())
+dataset=dataset.batch(2)
+list(dataset.as_numpy_iterator())
+
+>>>
+[(1, 6), (2, 5), (3, 4), (4, 3), (5, 2), (6, 1)]
+>>>
+[(array([1, 2], dtype=int32), array([6, 5], dtype=int32)),
+ (array([3, 4], dtype=int32), array([4, 3], dtype=int32)),
+ (array([5, 6], dtype=int32), array([2, 1], dtype=int32))]
+"""
