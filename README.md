@@ -7,17 +7,29 @@
 
 tensorflow: tf2.x
 
+## embedding
+目前embedding主要侧重于推荐一块
+### graph network
+line部分：https://github.com/tangjianpku/LINE
+
 ## text classification 
 textcnn
 
-## deep ctr
+## Recommendation System
 
 
 ## POS
 
 
-## tensorflow中的一些知识点
+## 基础知识
+### tensorflow中的一些知识点
 [keras中两种交叉熵损失函数的探讨](https://zhuanlan.zhihu.com/p/48078990) 
+
+### 采样
+alias采样：<br>
+https://shomy.top/2017/05/09/alias-method-sampling/ <br>
+https://blog.csdn.net/haolexiao/article/details/65157026 <br>
+
 
 ## 一些好的资料
 [tensorflow1.x estimator deep_ctr](https://github.com/qiaoguan/deep-ctr-prediction/tree/master/DeepFM)
